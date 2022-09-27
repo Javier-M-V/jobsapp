@@ -1,8 +1,7 @@
 package com.jobsapp.restcontrollers;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -43,22 +42,20 @@ public class ToDoRestController {
 	@PostMapping(value = "/2")
 	public void newTodo (@RequestBody TodoDto dto){
 		
-		todoService.save(modelMapper.map(dto, ToDo.class));
+		todoService.create(modelMapper.map(dto, ToDo.class));
 	}
 	
 	@GetMapping(value = "/2")
 	public CollectionModel<ToDo> allParam(@RequestParam(name = "status", required=false) String request){
 		
-		return CollectionModel.of(this.filtering(request, todoService.getAll()));
+		return CollectionModel.of(this.filterCompleted(request, todoService.getAll()));
 	}
 
-	private Collection<ToDo> filtering(String request, Collection<ToDo> collection) {
+	private Collection<ToDo> filterCompleted(String request, Collection<ToDo> collection) {
 		
 		Predicate <ToDo> predicate;
-		
-		Optional<String> opRequest = Optional.ofNullable(request);
-		
-		if(opRequest.isPresent()) {
+	
+		if(request != null) {
 			
 			if(PARAM_COMPLETED.equals(request)) {
 				

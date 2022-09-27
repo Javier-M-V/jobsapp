@@ -18,6 +18,4 @@ public interface IToDoService {
 	public Map<Boolean, Long> getStats();
 	
 	public Collection<String> getTitles();
-	
-	public void save(ToDo item );
 }

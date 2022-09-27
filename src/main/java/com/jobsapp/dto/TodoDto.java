@@ -1,6 +1,12 @@
 package com.jobsapp.dto;
 
-public class TodoDto {
+import java.io.Serializable;
+
+public class TodoDto implements Serializable{
+	
+	private static final long serialVersionUID = -1245986449880540930L;
+
+	private long id;
 	
 	private boolean completed;
 
@@ -30,6 +36,14 @@ public class TodoDto {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

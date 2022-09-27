@@ -36,11 +36,6 @@ public class TodoServiceH2 implements IToDoService {
 		
 		return converter.toList(todoRepository.findAll());
 	}
-	
-//	public Collection<ToDo> getAllCompleted() {
-//		
-//		return converter.toList(todoRepository.findAll()).stream().filter(i-> i.isCompleted()).toList();
-//	}
 
 	@Override
 	public Collection<ToDo> getByStatus(boolean isCompleted) {
@@ -68,11 +63,5 @@ public class TodoServiceH2 implements IToDoService {
 				.map(ToDo :: getDescription)
 				.sorted((String a , String b) -> a.length() -b.length())
 				.collect(Collectors.toList());	 
-	}
-
-	@Override
-	public void save(ToDo item) {
-		
-		todoRepository.save(item);
 	}
 }
