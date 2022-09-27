@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.jobsapp.api.IToDoService;
@@ -15,7 +16,8 @@ import com.jobsapp.support.Converter;
 
 
 @Service("todoService")
-public class TodoService implements IToDoService {
+@Profile("h2")
+public class TodoServiceH2 implements IToDoService {
 
 	@Autowired
 	private TodoRepository todoRepository;
@@ -35,10 +37,10 @@ public class TodoService implements IToDoService {
 		return converter.toList(todoRepository.findAll());
 	}
 	
-	public Collection<ToDo> getAllCompleted() {
-		
-		return converter.toList(todoRepository.findAll()).stream().filter(i-> i.isCompleted()).toList();
-	}
+//	public Collection<ToDo> getAllCompleted() {
+//		
+//		return converter.toList(todoRepository.findAll()).stream().filter(i-> i.isCompleted()).toList();
+//	}
 
 	@Override
 	public Collection<ToDo> getByStatus(boolean isCompleted) {
@@ -65,8 +67,7 @@ public class TodoService implements IToDoService {
 		 return this.getAll().stream()
 				.map(ToDo :: getDescription)
 				.sorted((String a , String b) -> a.length() -b.length())
-				.collect(Collectors.toList());
-		 
+				.collect(Collectors.toList());	 
 	}
 
 	@Override
