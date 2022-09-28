@@ -60,7 +60,7 @@ public class TodoServiceH2 implements IToDoService {
 	public Collection<String> getTitles() {
 		
 		 return this.getAll().stream()
-				.map(ToDo :: getDescription)
+				.map(ToDo :: getTitle)
 				.sorted((String a , String b) -> a.length() -b.length())
 				.collect(Collectors.toList());	 
 	}

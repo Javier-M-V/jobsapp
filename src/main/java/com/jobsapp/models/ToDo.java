@@ -21,7 +21,7 @@ public class ToDo {
 	private boolean completed;
 
 	@Column(name="title", nullable = false)
-	private String description;
+	private String title;
 	
 	@Column(name="userid", nullable = false)
 	private long userId;
@@ -42,12 +42,12 @@ public class ToDo {
 		this.completed = completed;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public long getUserId() {

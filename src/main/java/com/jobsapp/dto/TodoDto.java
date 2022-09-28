@@ -2,16 +2,21 @@ package com.jobsapp.dto;
 
 import java.io.Serializable;
 
+import org.springframework.lang.NonNull;
+
 public class TodoDto implements Serializable{
 	
 	private static final long serialVersionUID = -1245986449880540930L;
 
 	private long id;
 	
+	@NonNull
 	private boolean completed;
-
-	private String description;
 	
+	@NonNull
+	private String title;
+	
+	@NonNull
 	private long userId;
 
 	public boolean isCompleted() {
@@ -20,14 +25,6 @@ public class TodoDto implements Serializable{
 
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public long getUserId() {
@@ -44,6 +41,14 @@ public class TodoDto implements Serializable{
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

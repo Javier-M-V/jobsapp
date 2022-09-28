@@ -7,7 +7,7 @@ import java.util.stream.StreamSupport;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Converter{
+public class Converter {
 
 	public <T> List <T> toList (Iterable<T> element){
 		
