@@ -49,9 +49,9 @@ public class ToDoRestController {
 	}
 	
 	@PostMapping(value = "/2")
-	public void newTodo (@RequestBody @Validated TodoDto todoDto){
+	public EntityModel<ToDo> newTodo (@RequestBody @Validated TodoDto todoDto){
 		
-		todoService.create(modelMapper.map(todoDto, ToDo.class));
+		return EntityModel.of(todoService.create(modelMapper.map(todoDto, ToDo.class)));
 	}
 	
 	@GetMapping(value = "/2")

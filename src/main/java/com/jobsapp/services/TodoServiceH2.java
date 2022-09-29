@@ -26,9 +26,9 @@ public class TodoServiceH2 implements IToDoService {
 	private Converter converter;
 	
 	@Override
-	public void create(ToDo item) {
+	public ToDo create(ToDo item) {
 		
-		todoRepository.save(item);
+		return todoRepository.save(item);
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import com.jobsapp.models.ToDo;
 
 public interface IToDoService {
 	
-	public void  create(ToDo item);
+	public ToDo  create(ToDo item);
 	
 	public Collection<ToDo> getAll();
 	
