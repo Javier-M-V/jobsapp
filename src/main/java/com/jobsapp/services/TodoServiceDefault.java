@@ -34,50 +34,52 @@ public class TodoServiceDefault implements IToDoService {
 	
 	@Override
 	public ToDo create(ToDo item) {
-		// TODO Auto-generated method stub
-
+		
+		ResponseEntity<ToDo> response = restTemplate.postForEntity(url, item, ToDo.class);
+		
+		return response.getBody();
 	}
 
 	@Override
 	public Collection<ToDo> getAll() {
 	
-		ResponseEntity<ToDo[]>  data = restTemplate.getForEntity(url, ToDo[].class);
-		return Arrays.asList(data.getBody());
+		ResponseEntity<ToDo[]>  response = restTemplate.getForEntity(url, ToDo[].class);
+		return Arrays.asList(response.getBody());
 	}
 
 
 	@Override
 	public Collection<ToDo> getByStatus(boolean isCompleted) {
 		
-		ResponseEntity<ToDo[]> data = restTemplate
+		ResponseEntity<ToDo[]> response = restTemplate
 				.getForEntity(url.concat("?completed=" + String.valueOf(isCompleted)), ToDo[].class);
 
-		return Arrays.asList(data.getBody());
+		return Arrays.asList(response.getBody());
 	}
 
 	@Override
 	public Collection<ToDo> getByUserId(long userId) {
 		
-		ResponseEntity<ToDo[]>  data = restTemplate.getForEntity(url.concat("?userId="+userId), ToDo[].class);
+		ResponseEntity<ToDo[]>  response = restTemplate.getForEntity(url.concat("?userId="+userId), ToDo[].class);
 		
-		return Arrays.asList(data.getBody());
+		return Arrays.asList(response.getBody());
 	}
 
 	@Override
 	public Map<Boolean, Long> getStats() {
 		
-		ResponseEntity<ToDo[]> data = restTemplate.getForEntity(url, ToDo[].class);
+		ResponseEntity<ToDo[]> response = restTemplate.getForEntity(url, ToDo[].class);
 		
-		return Arrays.asList(data.getBody()).stream()
+		return Arrays.asList(response.getBody()).stream()
 				.collect(Collectors.groupingBy(ToDo:: isCompleted, Collectors.counting()));
 	}
 
 	@Override
 	public Collection<String> getTitles() {
 
-		ResponseEntity<ToDo[]> data = restTemplate.getForEntity(url, ToDo[].class);
+		ResponseEntity<ToDo[]> response = restTemplate.getForEntity(url, ToDo[].class);
 		
-		return Arrays.asList(data.getBody()).stream()
+		return Arrays.asList(response.getBody()).stream()
 				.map(ToDo::getTitle)
 				.sorted((String a, String b) ->  a.length() - b.length())
 				.collect(Collectors.toList());

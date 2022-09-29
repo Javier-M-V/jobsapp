@@ -29,7 +29,6 @@ import com.jobsapp.support.Converter;
 @Validated
 public class ToDoRestController {
 	
-	
 	private static String PARAM_COMPLETED = "completed";
 	
 	@Autowired 
@@ -49,7 +48,7 @@ public class ToDoRestController {
 	}
 	
 	@PostMapping(value = "/2")
-	public EntityModel<ToDo> newTodo (@RequestBody @Validated TodoDto todoDto){
+	public EntityModel<ToDo> newTodo (@RequestBody TodoDto todoDto){
 		
 		return EntityModel.of(todoService.create(modelMapper.map(todoDto, ToDo.class)));
 	}
