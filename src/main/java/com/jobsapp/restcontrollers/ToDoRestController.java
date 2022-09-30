@@ -1,8 +1,5 @@
 package com.jobsapp.restcontrollers;
 
-import java.util.Collection;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +20,16 @@ import com.jobsapp.dto.TitlesDto;
 import com.jobsapp.dto.TodoDto;
 import com.jobsapp.models.ToDo;
 import com.jobsapp.support.Converter;
+import com.jobsapp.support.TodoFilters;
 
+/***
+ * 
+ * Main Controller for odilo API
+ * */
 @RequestMapping("/odilo/tests")
 @RestController
 @Validated
 public class ToDoRestController {
-	
-	private static String PARAM_COMPLETED = "completed";
 	
 	@Autowired 
 	private IToDoService todoService;
@@ -40,6 +40,9 @@ public class ToDoRestController {
 	@Autowired
 	private Converter converter;
 	
+	@Autowired
+	private TodoFilters todoFilters;
+	
 	
 	@GetMapping(value = "/1")
 	public CollectionModel<ToDo> all(){
@@ -48,15 +51,15 @@ public class ToDoRestController {
 	}
 	
 	@PostMapping(value = "/2")
-	public EntityModel<ToDo> newTodo (@RequestBody TodoDto todoDto){
+	public EntityModel<ToDo> newTodo (@RequestBody @Validated TodoDto todoDto){
 		
 		return EntityModel.of(todoService.create(modelMapper.map(todoDto, ToDo.class)));
 	}
 	
 	@GetMapping(value = "/2")
-	public CollectionModel<ToDo> allParam(@RequestParam(name = "status", required=false) String request){
+	public CollectionModel<ToDo> allParam(@RequestParam(name = "completed", required=false) String request){
 		
-		return CollectionModel.of(this.filterCompleted(request, todoService.getAll()));
+		return CollectionModel.of(todoFilters.filterCompleted(request, todoService.getAll()));
 	}
 	
 	@GetMapping(value = "/2/user/{userid}")
@@ -79,25 +82,5 @@ public class ToDoRestController {
 		TitlesDto dto = new TitlesDto(converter.toList(todoService.getTitles()));
 		
 		return EntityModel.of(dto);
-	}
-
-	private Collection<ToDo> filterCompleted(String request, Collection<ToDo> collection) {
-		
-		Predicate <ToDo> predicate;
-	
-		if(request != null) {
-			
-			if(PARAM_COMPLETED.equals(request)) {
-				
-				predicate = i -> (i.isCompleted() == true);
-			}
-			else {
-				predicate = i -> (i.isCompleted() == false);
-			}
-			return collection.stream().filter(predicate).collect(Collectors.toList());
-		}
-		else {
-			return collection;
-		}		
 	}
 }

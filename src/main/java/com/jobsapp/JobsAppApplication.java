@@ -1,13 +1,9 @@
 package com.jobsapp;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -25,9 +21,9 @@ public class JobsAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JobsAppApplication.class, args);
-	
+
 		Job job = new Job();
-		job.run();	
+		job.run();
 	}
 
 	@Bean
@@ -40,12 +36,11 @@ public class JobsAppApplication {
 		executor.initialize();
 		return executor;
 	}
-	
-	 @Async
-	  public static CompletableFuture<String> todo(Long miliseconds) throws InterruptedException {
-	  
-	   
-		 Thread.sleep(1000L);
-	    return CompletableFuture.completedFuture("Test job executed at"+ new Date().toString());
-	  }
+
+	@Async
+	public static CompletableFuture<String> todo(Long miliseconds) throws InterruptedException {
+
+		Thread.sleep(1000L);
+		return CompletableFuture.completedFuture("Test job executed at" + new Date().toString());
+	}
 }

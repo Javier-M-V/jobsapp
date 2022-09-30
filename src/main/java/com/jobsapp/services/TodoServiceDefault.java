@@ -15,9 +15,13 @@ import org.springframework.web.client.RestTemplate;
 import com.jobsapp.api.IToDoService;
 
 import com.jobsapp.models.ToDo;
+import com.jobsapp.support.Converter;
 
 
-@Service("TodoServiceDefault")
+/**
+ * Default service pointing to url
+ * */
+@Service("todoServiceDefault")
 @Profile("default")
 public class TodoServiceDefault implements IToDoService {
 
@@ -26,7 +30,10 @@ public class TodoServiceDefault implements IToDoService {
 	private String url;
 	
 	private final RestTemplate restTemplate;
-
+	
+	@Autowired
+	private Converter converter;
+	
 	@Autowired
 	public TodoServiceDefault (){
 		restTemplate = new RestTemplate();
@@ -47,12 +54,11 @@ public class TodoServiceDefault implements IToDoService {
 		return Arrays.asList(response.getBody());
 	}
 
-
 	@Override
 	public Collection<ToDo> getByStatus(boolean isCompleted) {
 		
 		ResponseEntity<ToDo[]> response = restTemplate
-				.getForEntity(url.concat("?completed=" + String.valueOf(isCompleted)), ToDo[].class);
+				.getForEntity(url.concat("?completed=" + isCompleted), ToDo[].class);
 
 		return Arrays.asList(response.getBody());
 	}
@@ -81,7 +87,7 @@ public class TodoServiceDefault implements IToDoService {
 		
 		return Arrays.asList(response.getBody()).stream()
 				.map(ToDo::getTitle)
-				.sorted((String a, String b) ->  a.length() - b.length())
+				.sorted((String a , String b) -> converter.secureLenght(a) -converter.secureLenght(b))
 				.collect(Collectors.toList());
 	}
 }

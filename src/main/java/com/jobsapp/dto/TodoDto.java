@@ -2,16 +2,19 @@ package com.jobsapp.dto;
 
 import java.io.Serializable;
 
+import org.springframework.lang.NonNull;
+
 public class TodoDto implements Serializable{
 	
 	private static final long serialVersionUID = -1245986449880540930L;
 
 	private long id;
 	
+	@NonNull
 	private boolean completed;
-	
+	@NonNull
 	private String title;
-	
+	@NonNull
 	private long userId;
 
 	public long getId() {

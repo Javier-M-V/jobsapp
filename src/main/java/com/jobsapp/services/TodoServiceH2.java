@@ -15,6 +15,11 @@ import com.jobsapp.repository.TodoRepository;
 import com.jobsapp.support.Converter;
 
 
+/**
+ * 
+ * Database service for H2 profile 
+ * 
+ * */
 @Service("todoService")
 @Profile("h2")
 public class TodoServiceH2 implements IToDoService {
@@ -61,7 +66,7 @@ public class TodoServiceH2 implements IToDoService {
 		
 		 return this.getAll().stream()
 				.map(ToDo :: getTitle)
-				.sorted((String a , String b) -> a.length() -b.length())
+				.sorted((String a , String b) -> converter.secureLenght(a) -converter.secureLenght(b))
 				.collect(Collectors.toList());	 
 	}
 }
