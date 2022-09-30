@@ -1,13 +1,11 @@
 package com.jobsapp.support;
 
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Component;
-
 
 
 @Component
@@ -22,6 +20,4 @@ public class Converter {
 		
 		return Optional.ofNullable(a).map(String::length).orElse(0);
 	}
-	
-	
 }
