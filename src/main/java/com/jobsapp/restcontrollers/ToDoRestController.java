@@ -47,7 +47,8 @@ public class ToDoRestController {
 	@GetMapping(value = "/1")
 	public CollectionModel<ToDo> all(){
 			
-		return CollectionModel.of(todoService.getAll());
+		return CollectionModel.of(todoService.getAll()); 
+		
 	}
 	
 	@PostMapping(value = "/2")
